@@ -153,7 +153,7 @@ b{
 	height: 400px;
 	image-rendering: pixelated;
 	border: solid 35px #fff;
-	outline: ridge 25px #262f40;
+	outline: ridge 25px #3D3D3D;
 	margin: 50px 0 30px;
 	box-shadow: 25px 25px 10px #555;
 }
@@ -294,7 +294,7 @@ input[type=number]{
 	#escolha { text-align: center; }
 	#legenda { margin: 0; }
 	#tela_resultado { width: 50%; height: auto; }
-	.materia .quadro{ width: 50%; height: auto; outline: ridge 15px #262f40; box-shadow: 15px 15px 10px #555;}
+	.materia .quadro{ width: 50%; height: auto; outline: ridge 15px #3D3D3D; box-shadow: 15px 15px 10px #555;}
 }
 
 
