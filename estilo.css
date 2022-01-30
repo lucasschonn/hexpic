@@ -153,7 +153,7 @@ b{
 	height: 400px;
 	image-rendering: pixelated;
 	border: solid 35px #fff;
-	outline: ridge 25px #11151c;
+	outline: ridge 25px #262f40;
 	margin: 50px 0 30px;
 	box-shadow: 25px 25px 10px #555;
 }
@@ -274,7 +274,7 @@ input[type=number]{
 	.acoes { text-align: center; padding: 0; display: block;}
 	#legenda { margin: 0; }
 	#tela_resultado { width: 50%; height: auto; }
-	.materia .quadro{ width: 50%; height: auto; }
+	.materia .quadro{ width: 50%; height: auto;}
 	.atual { display: none !important; }
 	.atual a{ color: #eee !important; }
 }
@@ -289,12 +289,12 @@ input[type=number]{
 	.atual a{ color: #eee !important; }
 	.resultado { padding: 0; }
 	.acoes { text-align: center; padding: 0; display: block;}
-	.upload { width: 100%; box-sizing:  border-box; text-align: center; padding: 30px 15px; }
+	.upload { width: 100%; box-sizing:  border-box; text-align: center; padding: 30px 15px;}
 	.upload i { display: none; }
 	#escolha { text-align: center; }
 	#legenda { margin: 0; }
 	#tela_resultado { width: 50%; height: auto; }
-	.materia .quadro{ width: 50%; height: auto; }
+	.materia .quadro{ width: 50%; height: auto; outline: ridge 15px #262f40; box-shadow: 15px 15px 10px #555;}
 }
 
 
