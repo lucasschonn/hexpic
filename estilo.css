@@ -31,7 +31,7 @@
 
 .menu a{
 	display: inline-block;
-	color: #444 !important;
+	color: #999 !important;
 	text-decoration: none;
 	padding: 30px 20px 0 0;
 	font-size: 16px;
@@ -153,7 +153,7 @@ b{
 	height: 400px;
 	image-rendering: pixelated;
 	border: solid 35px #fff;
-	outline: ridge 25px #3c493f;
+	outline: ridge 25px #11151c;
 	margin: 50px 0 30px;
 	box-shadow: 25px 25px 10px #555;
 }
@@ -275,6 +275,8 @@ input[type=number]{
 	#legenda { margin: 0; }
 	#tela_resultado { width: 50%; height: auto; }
 	.materia .quadro{ width: 50%; height: auto; }
+	.atual { display: none !important; }
+	.atual a{ color: #eee !important; }
 }
 
 @media screen and (max-width: 512px) {
@@ -282,7 +284,9 @@ input[type=number]{
 	.top_link { font-size: 0; }
 	.top_link i { display: inline-block; font-size: 15px; }
 	.navegacao h2 { font-size: 28px; }
-	.menu{ display: none; }
+	/*.menu{ display: none; }*/
+	.atual { display: none !important; }
+	.atual a{ color: #eee !important; }
 	.resultado { padding: 0; }
 	.acoes { text-align: center; padding: 0; display: block;}
 	.upload { width: 100%; box-sizing:  border-box; text-align: center; padding: 30px 15px; }
