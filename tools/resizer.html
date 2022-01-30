@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>RESIZER</title>
+</head>
+<body>
+	<canvas id="tela"></canvas>
+	<img src="img.png" id="imagem">
+</body>
+</html>
+<script type="text/javascript">
+	var canvas = document.getElementById("tela");
+	var context = canvas.getContext("2d");
+
+	var imagem = new Image();
+	imagem.src = document.getElementById("imagem").src;
+
+	canvas.width  = 3840;
+	canvas.height = 3840;
+
+	var img1 = new Image();
+
+    img1.onload = function () {
+    	context.imageSmoothingEnabled = false;
+        context.drawImage(img1, 0, 0, canvas.width, canvas.width);
+    };
+
+       
+    img1.src = 'img.png';
+
+
+</script>

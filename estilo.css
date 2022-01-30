@@ -1,0 +1,312 @@
+ __________ LOCAL								 */
+
+
+
+.navegacao{
+	display: block;
+	border-bottom: solid 1px #fcfcfc;
+}
+
+.navegacao .logo{
+	width: 23px;
+	height: 23px;
+	margin-right: 20px;
+}
+
+.navegacao h2{
+	display: inline-block;
+	font-size: 30px;
+	padding: 20px;
+	color: #444;
+}
+
+.menu{
+	display: inline-block;
+	float: right;
+}
+
+.menu li{
+	display: inline-block;
+}
+
+.menu a{
+	display: inline-block;
+	color: #444 !important;
+	text-decoration: none;
+	padding: 30px 20px 0 0;
+	font-size: 16px;
+}
+
+.top_link i {
+	display: none;
+}
+
+
+
+/* __________ WEB								 */
+
+
+
+/* ____ COMPONENTES COMUNS */
+
+*, html{
+	padding: 0;
+	margin: 0;
+	font-family: 'Merriweather';
+}
+
+b{
+	color: #666080;
+}
+
+.container{
+	max-width: 1920px;
+	display: block;
+	padding: 40px;
+	margin: 0 auto;
+	clear: both;
+}
+
+.botao,
+.botao_escolha{
+	cursor: pointer;
+	display: inline-block;
+	font-size: 15px;
+	color: #fff !important;
+	background: #9d99b2;
+	padding: 10px 20px;
+	border-radius: 5px;
+	border: none;
+	margin-bottom: 10px;
+	text-decoration: none;
+}
+
+.botao_escolha{
+	background: #9d99b2 !important;
+	padding: 12px 24px !important;
+}
+
+.botao_direita{
+	float: right;
+}
+
+.hxp_rosa{
+	background: #f09d99 !important;
+}
+
+.hxp_azul{
+	background: #99b8f0 !important;
+}
+
+.hxp_cinza{
+	cursor: default;
+	background: #CCC;
+}
+
+.hxp_verde{
+	cursor: cursor;
+	background: #98e972 !important;
+}
+
+.materia{
+	max-width: 1024px;
+	margin: 0 auto;
+	text-align: center;
+}
+
+.materia .abertura{
+	width: 128px;
+	margin: 50px 0;
+	box-shadow: 2px 2px 5px #eee;
+}
+
+.materia h1{
+	margin-bottom: 50px;
+}
+
+.materia h2{
+	margin:  90px 0 10px;
+}
+
+.materia p{
+	margin-bottom: 15px;
+}
+
+.materia .leg_quadro{
+	display: block;
+	font-size: 10px;
+	color: #555;
+	margin-bottom: 30px;
+}
+
+.materia .leg_quadro a{
+	color: #555 !important;
+}
+
+.espacador{
+	margin-bottom: 50px;
+}
+
+.materia .quadro{
+	display: inline-block;
+	width: 400px;
+	height: 400px;
+	image-rendering: pixelated;
+	border: solid 35px #fff;
+	outline: ridge 25px #3c493f;
+	margin: 50px 0 30px;
+	box-shadow: 25px 25px 10px #555;
+}
+
+.oculto{
+	display: none !important;
+}
+
+.dica{
+	display: block;
+	margin: 20px 0;
+}
+
+.dica i{
+	margin-right: 10px;
+	color: #5f2e70;
+}
+
+.dica b{
+	color: #666080;
+}
+
+
+
+/* ____ HEXPIC PARA TEXTO */
+
+textarea{
+	display: block;
+	width: calc(100% - 20px);
+	height: 500px;
+	border-radius: 10px;
+	border: none;
+	box-shadow: 0 0 5px #ddd;
+	padding: 10px;
+	resize: none;
+}
+
+textarea:focus{
+	outline: none;
+}
+
+.resultado{
+	text-align: center;
+	padding: 50px;
+}
+
+.acoes{
+	display: inline-block;
+	vertical-align: top;
+	text-align: left;
+	padding-top: 25px;
+}
+
+.gera_arte{
+	display: inline-block;
+}
+
+#tela_resultado{
+	display: inline-block;
+	width: 400px;
+	height: 400px;
+	image-rendering: pixelated;
+	border: solid 35px #fff;
+	outline: ridge 25px #3c493f;
+	margin: 50px;
+	box-shadow: 25px 25px 10px #555;
+}
+
+#legenda{
+	display: inline-block;
+	font-size: 15px;
+	max-width: 200px;
+	padding: 10px;
+	margin-top: 283px;
+}
+
+		
+
+input{
+	display: block;
+}
+
+input[type=number]{
+	display: inline-block;
+	padding: 10px 20px;
+	appearance: textfield;
+	border:  solid 1px #AAA;
+	border-radius: 5px;
+}
+
+.upload{
+	cursor: pointer;
+	display: inline-block;
+	font-size: 15px;
+	color: #fff !important;
+	background: #9d99b2;
+	padding: 20px 40px 20px 0;
+	border-radius: 5px;
+	border: none;
+}
+
+.upload i{
+	display: inline-block;
+	padding: 10px 18px 10px 20px;
+	font-size: 11px;
+	border-right: solid 1px rgba(255, 255, 255, 0.1);
+	margin-right: 20px;
+}
+
+.campo_upload{
+	padding: 20px 0;
+}
+
+/* ____ RESPONSIVIDADE */
+
+@media screen and (max-width: 980px) {
+	.resultado { padding: 0; }
+	.acoes { text-align: center; padding: 0; display: block;}
+	#legenda { margin: 0; }
+	#tela_resultado { width: 50%; height: auto; }
+	.materia .quadro{ width: 50%; height: auto; }
+}
+
+@media screen and (max-width: 512px) {
+	.container { padding: 0 20px 20px; }
+	.top_link { font-size: 0; }
+	.top_link i { display: inline-block; font-size: 15px; }
+	.navegacao h2 { font-size: 28px; }
+	.menu{ display: none; }
+	.resultado { padding: 0; }
+	.acoes { text-align: center; padding: 0; display: block;}
+	.upload { width: 100%; box-sizing:  border-box; text-align: center; padding: 30px 15px; }
+	.upload i { display: none; }
+	#escolha { text-align: center; }
+	#legenda { margin: 0; }
+	#tela_resultado { width: 50%; height: auto; }
+	.materia .quadro{ width: 50%; height: auto; }
+}
+
+
+
+
+
+/* ____ ANTIGOS */
+
+/*.entrada_cor{
+	display: inline-block;
+	font-size: 15px;
+	color: #555;
+	background: #fff;
+	padding: 10px 20px;
+	border-radius: 5px;
+	border: solid 1px #555;
+	margin-bottom: 10px;
+	outline: none !important;
+}

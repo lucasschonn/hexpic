@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Text test</title>
+</head>
+<body>
+	<button onclick="testar()" style="background: #ff66ff; padding: 10px; font-size: 20px; border: none;">TESTAR TAMANHO DE IMAGEM</button>
+	<br/>
+	<br/>
+	<textarea id="texto" cols="200" rows="50"></textarea>
+	<br>
+
+</body>
+<script type="text/javascript">
+	function testar(){
+		var campo_texto = document.querySelector("#texto");
+
+		var hexa = Hex(campo_texto.value);
+
+		var pixels = hexa.length / 6;
+
+		var tamanho = Math.sqrt(pixels);
+
+
+
+		alert(pixels + ' pixels totais\n\n\n ' + tamanho + '\n\n\n\ 1x \n 2x \n 4x \n 9x \n 16x \n 25x \n 36x \n 49x \n 64x \n 81x \n 100x \n 121x \n 144x');
+	}
+
+
+
+
+	function Hex(textoUTF){
+		hex = obterHex(obterUTF8(textoUTF));
+		return hex;
+	}
+
+	function obterHex(bytes) {
+	  return Array.from(bytes, byte => byte.toString(16).padStart(2, "0")).join("");
+	}
+
+	function obterUTF8(string) {
+	  return new TextEncoder().encode(string);
+	}
+</script>
+</html>

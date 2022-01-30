@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Página de Criação</title>
+	<meta charset="utf-8">
+	<link href="https://fonts.googleapis.com/css2?family=Merriweather&family=Vujahday+Script&display=swap" rel="stylesheet">
+	<style type="text/css">
+		*, html{
+			padding: 0;
+			margin: 0;
+			font-family: 'Merriweather';
+		}
+		body{
+			padding: 20px;
+		}
+		textarea{
+			display: block;
+			width: calc(100% - 20px);
+			height: 500px;
+			border-radius: 10px;
+			border: none;
+			box-shadow: 0 0 5px #ddd;
+			padding: 10px;
+			resize: none;
+		}
+
+		button, span{
+			padding: 15px 20px;
+			font-size: 16px;
+			border-radius: 5px;
+		}
+
+		#resultado{
+			margin-top: 20px;
+		}
+	</style>
+</head>
+<body>
+	<div>1 / 2 / 4 / 9 / 16 / 25 / 36 / 49 / 64 / 81 / 100 / 121 / 144 / 169 / 196</div>
+	<br>
+	<textarea id="texto" placeholder="Use apenas em texto capitular" onkeyup="calcula()"></textarea>
+	<br>
+	<button onclick="testar()" style="background: #00acee; border: none; color: #fff;">Randomizar</button>
+	<span id="letras"></span>
+	<br>
+	<div id="resultado"></div>
+
+</body>
+<script type="text/javascript">
+	function testar(){
+		var campo_texto = document.querySelector("#texto");
+
+		var hexa = Hex(campo_texto.value);
+
+		var convertido = '';
+
+		for (i = 0; i < hexa.length; i = i + 2){
+			convertido = convertido + aumenta(hexa.substr(i, 2),randi(0,30));
+		}
+
+		document.querySelector("#resultado").innerHTML = (new TextDecoder().decode(hexToBytes(convertido)));
+
+		calcula();
+		
+
+	}
+
+
+	function calcula(){
+		var campo_texto = document.querySelector("#texto");
+
+		var letras = campo_texto.value.length;
+
+		var hexa = Hex(campo_texto.value);
+
+		var divi = hexa.length / 6;
+
+		document.querySelector("#letras").innerHTML = (letras + ' letras e ' + divi + ' pixels');
+	}
+
+
+
+
+	function Hex(textoUTF){
+		hex = obterHex(obterUTF8(textoUTF));
+		return hex;
+	}
+
+	function hexToBytes(hex) {
+	    const bytes = new Uint8Array(hex.length / 2);
+	    for (let i = 0; i !== bytes.length; i++) {
+	        bytes[i] = parseInt(hex.substr(i * 2, 2), 16);
+	    }
+	    return bytes;
+	}
+
+	function obterHex(bytes) {
+	  return Array.from(bytes, byte => byte.toString(16).padStart(2, "0")).join("");
+	}
+
+	function obterUTF8(string) {
+	  return new TextEncoder().encode(string);
+	}
+
+	function randi(min, max) {
+  		min = Math.ceil(min);
+  		max = Math.floor(max);
+  		return Math.floor(Math.random() * (max - min)) + min;
+	}
+
+	function aumenta(hexadecimal, tipo){
+
+		var qtde = 0;
+
+		sw = Math.floor(tipo/10);
+
+		switch (sw) {
+			case 1:
+				qtde = 0;
+				break;
+			case 2:
+				qtde = 32;
+				break;
+			case 3:
+				qtde = 4036858973;
+				break;
+			case 4:
+				qtde = 4036859461;
+				break;
+			case 5:
+				qtde = 4036859217;
+				break;
+
+
+		}
+
+		var decimal = parseInt(hexadecimal, 16);
+
+		decimal = decimal + qtde;
+
+		return decimal.toString(16);
+	}
+</script>
+</html>

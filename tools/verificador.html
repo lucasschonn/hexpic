@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Verificador de Integridade</title>
+	<style type="text/css">
+		.logo{
+			display: block;
+			width: 64px;
+			height: auto;
+			margin:0 auto 20px;
+		}
+		.header{
+			width: 1000px;
+			text-align: center;
+			margin: 20px auto 40px;
+			font-family: sans-serif;
+		}
+		.bal{
+			width: 1000px;
+			min-height: 600px;
+			margin: 0 auto;
+			border-radius: 10px;
+			border:  solid 1px #eee;
+			box-shadow: 5px 5px 5px #fefefe;
+			font-family: sans-serif;
+			text-align: center;
+			padding: 20px;
+			overflow-x: hidden;
+		}
+
+		button{
+			color: #fff;
+			background: #f09d99;
+			font-family: sans-serif;
+			border: none;
+			border-radius: 5px;
+			margin: 20px 5px;
+			padding: 10px 20px;
+			cursor: pointer;
+		}
+
+		b{
+			color: #f09d99;
+		}
+		table img{
+			width: 48px;
+			height: auto;
+			image-rendering: pixelated;
+		}
+
+		table{
+			text-align: left;
+			border: none !important;
+		}
+
+		td{
+			white-space: nowrap; 
+			text-overflow: ellipsis !important;
+			overflow: hidden !important;
+			margin-bottom: 5px;
+		}
+
+		.b_verde{
+			color: #a2d729;
+		}
+
+		.b_vermelho{
+			color: #e01a4f;
+		}
+		.oculto { display: none; }
+	</style>
+</head>
+<body>
+	<div class="header">
+		<img class="logo" src="../imgs/hexpic.png">
+		Olá! Este é o verificador de integridade HexPic.
+		<br/>
+		Ele calcula as taxas de perdas ao redimensionar um HexPic para o formato HD 1:1 de 1080 pixels.
+		<br/>
+		Clique no botão abaixo e siga o passo a passo para realizar o teste.
+		<br/>
+		<br/>
+		Método de trabalho <b>Math.round</b>
+	</div>
+	<div class="bal" id="passo1">
+		<button onclick="Passo2()">Iniciar Teste</button>
+	</div>
+
+	<div class="bal oculto" id="passo2">
+		Gerando sequência numérica (0/3500000)
+
+		
+	</div>
+
+	<div class="bal oculto" id="passo3">
+		Sequência numérica gerada com sucesso!
+		<br/>
+		<button onclick="Passo3(vezes)" id="botao_vezes">Testar HexPics (1)</button>
+		<button onclick="navigator.clipboard.writeText(sequencia)">Copiar Sequência</button>
+		<br/>
+		<div id="log">
+			Relatório de testes:
+			<br/>
+			<table id="tabela">
+			</table>
+		</div>
+	</div>
+
+	<canvas id="canvas_1" class="oculto"></canvas>
+	<canvas id="canvas_2" class="oculto"></canvas>
+	<canvas id="canvas_3" class="oculto"></canvas>
+
+</body>
+</html>
+<script type="text/javascript" src="verificador.js"></script>
+<script type="text/javascript">
+	var vezes = 240;
+	var canvas = document.getElementById("canvas_1");
+	var context = canvas.getContext("2d");
+
+	var canvas_b = document.getElementById("canvas_2");
+	var context_b = canvas_b.getContext("2d");	
+
+	var sequencia = '';
+
+	var img_fonte = '';
+
+	var hexOriginal = '';
+	var hexDecodi = '';
+
+
+	function Passo2(){
+		passaTela("#passo1", "#passo2");
+
+		var max = 3500000;
+
+		while (sequencia.length < max){
+			sequencia = sequencia + Math.random() * (9 - 0) + 0;
+			mudaHTML("#passo2", 'Gerando sequência numérica (' + sequencia.length + '/' + max + ')');
+		}
+
+		if (sequencia.length > max){
+			passaTela("#passo2", "#passo3");
+		} else {
+			mudaHTML("#passo2", 'Hmm... Parece que houve algum problema ao gerar a sequência. Tente novamente.');
+		}
+	}
+
+	function Passo3(i){
+			fragmento = corte(i);
+			hexOriginal = Hex(fragmento);
+			HexPic(hexOriginal);
+			img_fonte = canvas.toDataURL("image/png");
+			hexDecodi = hexpicGrande(1080/i);
+			if (hexOriginal == hexDecodi) { geraRelatorio(i, true);} else { geraRelatorio(i, false);}
+			vezes++;
+			document.getElementById("botao_vezes").innerText = 'Testar HexPics ('+vezes+')';
+	}
+
+
+	function geraRelatorio(tamanho, teste){
+		tabela = document.getElementById("tabela");
+
+		status = teste == true ? '<b class="b_verde">Ok</b>' : '<b class="b_vermelho">Falha</b>';
+
+		tabela.innerHTML = tabela.innerHTML + '<tr><td><img src="' + img_fonte + '"/></td><td>Status: ' + status + ' | HXP ' + tamanho + 'x' + tamanho + ' | <br/>Hex Original: '  + hexOriginal + '<br/>Hex Decodificado: ' + hexDecodi + ' </td></tr>';
+	}
+
+
+	function corte(tamanho){
+		ext = (tamanho * tamanho) * 3;
+		fragmento = sequencia.substr(0, ext);
+
+		return fragmento;
+	}
+
+	function mudaHTML(elemento, valor){
+		var elem = document.querySelector(elemento);
+		elem.innerHTML = valor;
+	}
+
+	function passaTela(elementoA, elementoB){
+		var classe = 'oculto';
+		var elem_A = document.querySelector(elementoA);
+		var elem_B = document.querySelector(elementoB);
+
+		if (!elem_A.classList.contains("oculto") && elem_B.classList.contains(classe)) {
+			elem_A.classList.add(classe);
+			elem_B.classList.remove(classe);
+		} else if ((elem_A.classList.contains(classe) && !elem_B.classList.contains(classe))){
+			elem_A.classList.remove(classe);
+			elem_B.classList.add(classe);
+		}
+	}
+
+
+</script>

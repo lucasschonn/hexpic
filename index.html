@@ -1,0 +1,362 @@
+<!-- HEXPIC BETA 1.2 -->
+<!-- CÓDIGO ESCRITO POR JOSÉ LUCAS SCHON -->
+<!--  -->
+<!-- CHANGELOG -->
+<!-- 1.2 - AJUSTE RESPONSIVO; AJUSTE DE MARGEM DE ARREDONDAMENTO; INCLUSÃO DE MÉTODO PERSONALIZADO -->
+<!-- 1.1 - INCLUSÃO DE MÉTODO AUMENTADO E ARTE; ALTERAÇÃO DE LAYOUT; -->
+<!-- 1.0 - CRIAÇÃO DE MÉTODO DE CODIFICAÇÃO E DECODIFICAÇÃO; INCLUSÃO DE MÉTODO DE SALVAMENTO EM ARTE E HEXPIC AUMENTADO -->
+<!--  -->
+
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+	<title>HexPic - Converta texto em pixels!</title>
+	<!-- <link rel="canonical" href="https://url.com/" /> -->
+	<meta name="description" content="Converta texto em pixels. Crie mosaicos abstratos incríveis. Salve textos e frases em imagens. Mergulhe na experiência HexPic!">
+	<meta property="og:locale" content="en_US">
+	<meta property="og:title" content="HexPic Converter" />
+	<!-- <meta property="og:url" content="https://url.com/" /> -->
+	<meta property="og:image" content="imgs/ogimage.png" />
+	<meta property="og:site_name" content="HexPic" />
+	<meta property="og:description" content="Converta texto em pixels. Crie mosaicos abstratos incríveis. Salve textos e frases em imagens. Mergulhe na experiência HexPic!" />
+	<meta property="og:type" content="website" />
+	<link rel="icon" type="image/png" href="imgs/hxp192.png" sizes="192x192"/>
+	<link rel="icon" type="image/png" href="imgs/hxp96.png" sizes="96x96"/>
+	<link rel="icon" type="image/png" href="imgs/hxp32.png" sizes="32x32"/>
+	<link rel="icon" type="image/png" href="imgs/hxp16.png" sizes="16x16"/>
+	<link rel="manifest" href="/manifest.json"/>
+	<meta name="msapplication-TileColor" content="#f09d99"/>
+	<meta name="msapplication-TileImage" content="imgs/hxp144.png"/>
+	<meta name="theme-color" content="#ffffff"/>
+	<link href="https://fonts.googleapis.com/css2?family=Merriweather&family=Vujahday+Script&display=swap" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="estilo.css">
+	<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+</head>
+<body>
+	<nav class="navegacao">
+		<h2><img class="logo" src="imgs/HexPic.png">HexPic</h2>
+		<ul class="menu">
+			<li><a href="museum.html">Museu de Artes</a></li>
+			<li><a href="index.html">Conversor</a></li>
+		</ul>
+	</nav>
+	<div class="container">
+		<a href="index.html" class="botao top_link hxp_rosa"><i class="fas fa-th"></i>Texto para HexPic</a>
+		<a href="decode.html" class="botao top_link"><i class="fas fa-align-left"></i>HexPic para Texto</a>
+		<button class="botao botao_direita hxp_azul" onclick="HexPic(Hex(document.getElementById('texto').value))">Converter</button>
+
+		<textarea id="texto" placeholder="Digite ou cole seu texto UTF-8 aqui"></textarea>
+
+
+		<canvas id="tela" width="300px" height="300px" class="oculto"></canvas>
+		<div class="resultado oculto" id="resultado">
+			<img src="" id="tela_resultado">
+			<div class="acoes">
+				<a class="botao hxp_rosa" id="salvar_arte" download="HexPic_Art.png" onclick="geraArte()"href="">Salvar Arte HexPic</a>
+				<br/>
+				<a class="botao" id="salvar_hexpic" download="HexPic.png" href="">Salvar HexPic Puro</a>
+				<br/>
+				<a class="botao hxp_azul" id="salvar_hexpic_ext" download="Large_HexPic.png" href="">Salvar HexPic Aumentado</a>
+				<br/>
+				<span id="legenda"></span>
+			</div>
+		</div>
+
+		<canvas id="arte_pronta" class="oculto"></canvas>
+		<canvas id="hexpic_grande" class="oculto"></canvas>
+	</div>
+</body>
+</html>
+
+
+
+<script type="text/javascript">
+
+	var canvas = document.getElementById("tela");
+	var context = canvas.getContext("2d");
+
+	var canvas_b = document.getElementById("hexpic_grande");
+	var context_b = canvas_b.getContext("2d");
+
+
+	// CONVERTE O TEXTO EM HEXADECIMAL PARA O FORMATO HEXPIC E O PRINTA NO ELEMENTO CANVAS
+
+	function HexPic(hex){
+
+		if (hex != ''){
+			var campo_texto = document.querySelector("#texto");
+			var campo_resul = document.querySelector("#resultado");
+
+			if (!campo_texto.classList.contains("oculto")) {
+				campo_texto.classList.add("oculto");
+				campo_resul.classList.remove("oculto");
+			}
+
+			var hex_tam = hex.length;
+			var cluster = Math.ceil(hex_tam / 6);
+
+			if ((hex_tam / 6) != cluster) {
+				switch ((cluster * 6) - hex_tam) {
+		  			case 0:
+		  				break;
+		  			case 1:
+		  				hex = hex + '0';
+		  				break;
+					case 2:
+						hex = hex + '00';
+						break;
+					case 3:
+						hex = hex + '000';
+						break;
+					case 4:
+						hex = hex + '0000';
+						break;
+					case 5:
+						hex = hex + '00000';
+						break;
+				}
+			}
+
+			console.log(hex+ ' / ' + hex_tam + ' hexs e ' + cluster + ' clusters');
+
+			tela = Math.sqrt(cluster);
+			tela_ar = Math.ceil(tela);
+
+			canvas.width  = tela_ar;
+			canvas.height = tela_ar;
+			canvas.style.background = "#000";
+
+			var x = 0;
+			var y = 0;
+
+			for (var i = 0; i < hex_tam; i = i + 6) {
+				drawPixel(x, y, '#' + hex.substr(i, 6));
+				if (x == tela_ar - 1){
+					x = 0;
+					y++;
+				} else {
+					x++;
+				}
+			}
+
+			// CRIA O RESULTADO VISIVEL
+
+			var img = canvas.toDataURL("image/png");
+			document.getElementById("tela_resultado").src = img;
+			document.getElementById("salvar_hexpic").href = img;
+			document.getElementById("legenda").innerHTML = '<b>' + geraLegenda(24) + '</b> gerado por HexPic';
+
+			//CRIA UM HEXPIC EXTENDIDO
+
+			canvas_b.width  = 1080;
+			canvas_b.height = 1080;
+
+			context_b.beginPath();
+			context_b.rect(0, 0, 1080, 1080);
+			context_b.closePath();
+			context_b.fillStyle = "#000";
+			context_b.fill();
+
+			context_b.imageSmoothingEnabled = false;
+
+			context_b.drawImage(canvas, 0, 0, 1080, 1080);
+
+			var img_ext = canvas_b.toDataURL("image/png");
+			document.getElementById("salvar_hexpic_ext").href = img_ext;
+
+		}
+
+	}
+
+	// INVOCA AS FUNÇÕES PARA CONVERTER O TEXTO UTF-8 PARA HEXADECIMAL
+
+	function Hex(textoUTF){
+		hex = obterHex(obterUTF8(textoUTF));
+		return hex;
+	}
+	
+	// DESENHA PIXEL COM BASE NA COORDENADA X E Y, USANDO A COR HEXA DESIGNADA
+
+	function drawPixel(x, y, color) {
+		var roundedX = Math.round(x);
+		var roundedY = Math.round(y);
+	    context.beginPath();
+	    context.fillStyle = color || '#000';
+	  	context.fillRect(roundedX, roundedY, 1, 1);
+	    context.fill();
+	}
+
+
+	// CONVERSOR UTF-8 PARA HEXADECIMAL
+
+	function obterHex(bytes) {
+	  return Array.from(bytes, byte => byte.toString(16).padStart(2, "0")).join("");
+	}
+
+	function obterUTF8(string) {
+	  return new TextEncoder().encode(string);
+	}
+
+	function salvarHexPic(){
+		var dataURL = canvas.toDataURL("image/png");
+		var newTab = window.open('about:blank','image from canvas');
+		newTab.document.write("<img src='" + dataURL + "' alt='from canvas'/>");
+	}
+
+	function geraLegenda(tamanho){
+		var legenda = document.getElementById("texto").value;
+
+		if (legenda.length > tamanho){
+			legenda = legenda.substr(0, tamanho) + '...';
+		}
+
+		return legenda;
+	}
+
+	function geraCor(){
+		var gerar1 = document.querySelector("#gerar1");
+		var gerar2 = document.querySelector("#gerar2");
+
+		gerar1.classList.add("oculto");
+		gerar2.classList.remove("oculto");
+
+	}
+
+	function geraArte(){
+
+		// CRIA UM CANVAS NOVO EM FORMATO DE QUADRO
+
+		var arte_pronta = document.getElementById("arte_pronta");
+		var arte_context = arte_pronta.getContext("2d");
+
+		var altura_total = 1080;
+		var largura_total = 1920;
+		var quadro = 920;
+		var margem = 80;
+		var preenc = 65;
+		var moldura = 40;
+
+		arte_pronta.width  = largura_total;
+		arte_pronta.height = altura_total;
+
+		// DESENHANDO O QUADRO E A SOMBRA
+
+		arte_context.filter = 'none';
+		arte_context.beginPath();
+		arte_context.rect(0, 0, largura_total, altura_total);
+		arte_context.fillStyle = '#f5f5f5';
+		arte_context.closePath();
+		arte_context.fill();
+		
+
+		arte_context.filter = 'blur(4px)';
+		arte_context.beginPath();
+		arte_context.rect(margem+4, margem+4, quadro, quadro);
+		arte_context.fillStyle = '#8F8F8F';
+		arte_context.closePath();
+		arte_context.fill();
+		arte_context.filter = 'none';
+
+		// DESENHANDO A BORDA RIGDE
+
+		arte_context.beginPath();
+		arte_context.moveTo(margem, margem);
+		arte_context.lineTo(margem, margem+quadro);
+		arte_context.lineTo(margem+quadro, margem);
+		arte_context.closePath();
+		arte_context.fillStyle = "#3c493f";
+		arte_context.fill();
+
+
+		arte_context.beginPath();
+		arte_context.moveTo(margem+(moldura/2), margem+(moldura/2));
+		arte_context.lineTo(margem+(moldura/2), margem+quadro-(moldura/2));
+		arte_context.lineTo(margem+quadro-(moldura/2), margem+(moldura/2));
+		arte_context.closePath();
+		arte_context.fillStyle = "#28312a";
+		arte_context.fill();
+
+		arte_context.beginPath();
+		arte_context.moveTo(margem, margem+quadro);
+		arte_context.lineTo(margem+quadro, margem+quadro);
+		arte_context.lineTo(margem+quadro, margem);
+		arte_context.closePath();
+		arte_context.fillStyle = "#28312a";
+		arte_context.fill();
+
+		arte_context.beginPath();
+		arte_context.moveTo(margem+(moldura/2), margem+quadro-(moldura/2));
+		arte_context.lineTo(margem+quadro-(moldura/2), margem+quadro-(moldura/2));
+		arte_context.lineTo(margem+quadro-(moldura/2), margem+(moldura/2));
+		arte_context.closePath();
+		arte_context.fillStyle = "#3c493f";
+		arte_context.fill();
+
+		// DESENHA O CAMPO BRANCO
+
+		arte_context.beginPath();
+		arte_context.rect(margem+moldura, margem+moldura, quadro-(moldura*2), quadro-(moldura*2));
+		arte_context.closePath();
+		arte_context.fillStyle = "#FFF";
+		arte_context.fill();
+
+		arte_context.imageSmoothingEnabled = false;
+
+		arte_context.drawImage(document.getElementById("tela_resultado"), margem+moldura+preenc, margem+moldura+preenc, quadro-(2*(moldura+preenc)), quadro-(2*(moldura+preenc)));
+
+	    arte_context.font = "10px Merriweather";
+		arte_context.fillStyle = "#CCC";
+		arte_context.textAlign = 'right';
+		arte_context.fillText(geraLegenda(24) + ' - by HexPic ', quadro+margem-preenc-moldura+3, quadro+margem-preenc-moldura+12);
+
+
+		// DESENHA LOGO DO HEXPIC
+
+		arte_context.beginPath();
+		arte_context.rect(largura_total-margem-128, margem, 128, 128);
+		arte_context.closePath();
+		arte_context.fillStyle = "#486578";
+		arte_context.fill();
+
+		arte_context.beginPath();
+		arte_context.rect(largura_total-margem-64, margem, 64, 64);
+		arte_context.closePath();
+		arte_context.fillStyle = "#506963";
+		arte_context.fill();
+
+		arte_context.beginPath();
+		arte_context.rect(largura_total-margem-128, margem+64, 64, 64);
+		arte_context.closePath();
+		arte_context.fillStyle = "#5f2e70";
+		arte_context.fill();
+
+		arte_context.beginPath();
+		arte_context.rect(largura_total-margem-64, margem+64, 64, 64);
+		arte_context.closePath();
+		arte_context.fillStyle = "#726f6a";
+		arte_context.fill();
+
+		arte_context.font = "25px Merriweather";
+		arte_context.fillStyle = "#666";
+		arte_context.textAlign = 'right';
+		arte_context.fillText(geraLegenda(30), largura_total-margem, altura_total-margem);
+
+		var img = arte_pronta.toDataURL("image/png");
+		document.getElementById("salvar_arte").href = img;
+
+	}
+
+</script>
+
+<!-- MODIFICAR AO INCORPORAR NO GOOGLE SITES
+
+CLASSE CONTAINER (REMOVER PADDING SUPERIOR)
+CLASSE TEXTO (REMOVER CALC)
+ALTERAR LINKS
+
+ -->

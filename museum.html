@@ -1,0 +1,220 @@
+<!-- HEXPIC BETA 1.2 -->
+<!-- CÓDIGO ESCRITO POR JOSÉ LUCAS SCHON -->
+<!--  -->
+<!-- CHANGELOG -->
+<!-- 1.2 - AJUSTE RESPONSIVO; AJUSTE DE MARGEM DE ARREDONDAMENTO; INCLUSÃO DE MÉTODO PERSONALIZADO -->
+<!-- 1.1 - INCLUSÃO DE MÉTODO AUMENTADO E ARTE; ALTERAÇÃO DE LAYOUT; -->
+<!-- 1.0 - CRIAÇÃO DE MÉTODO DE CODIFICAÇÃO E DECODIFICAÇÃO; INCLUSÃO DE MÉTODO DE SALVAMENTO EM ARTE E HEXPIC AUMENTADO -->
+<!--  -->
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+	<title>HexPic - Museu de HexPics!</title>
+	<!-- <link rel="canonical" href="https://url.com/" /> -->
+	<meta name="description" content="Converta texto em pixels. Crie mosaicos abstratos incríveis. Salve textos e frases em imagens. Mergulhe na experiência HexPic!">
+	<meta property="og:locale" content="en_US">
+	<meta property="og:title" content="HexPic Converter" />
+	<!-- <meta property="og:url" content="https://url.com/" /> -->
+	<meta property="og:image" content="imgs/ogimage.png" />
+	<meta property="og:site_name" content="HexPic" />
+	<meta property="og:description" content="Converta texto em pixels. Crie mosaicos abstratos incríveis. Salve textos e frases em imagens. Mergulhe na experiência HexPic!" />
+	<meta property="og:type" content="website" />
+	<link rel="icon" type="image/png" href="imgs/hxp192.png" sizes="192x192"/>
+	<link rel="icon" type="image/png" href="imgs/hxp96.png" sizes="96x96"/>
+	<link rel="icon" type="image/png" href="imgs/hxp32.png" sizes="32x32"/>
+	<link rel="icon" type="image/png" href="imgs/hxp16.png" sizes="16x16"/>
+	<link rel="manifest" href="/manifest.json"/>
+	<meta name="msapplication-TileColor" content="#f09d99"/>
+	<meta name="msapplication-TileImage" content="imgs/hxp144.png"/>
+	<meta name="theme-color" content="#ffffff"/>
+	<link href="https://fonts.googleapis.com/css2?family=Merriweather&family=Vujahday+Script&display=swap" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="estilo.css">
+<!-- 	<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/> -->
+</head>
+<body>
+	<nav class="navegacao">
+		<ul class="menu">
+			<li><a href="museum.html">Museu de Artes</a></li>
+			<li><a href="index.html">Conversor</a></li>
+		</ul>
+	</nav>
+	<div class="container">
+		<div class="materia">
+			<img class="abertura" src="imgs/museum/abertura.png">
+			<h1>O Incrível Museu HexPic</h1>
+
+			<p>HexPic é um modo diferente de interagir com textos. Seu funcionamento se baseia na padronização da codificação Unicode, a qual define que cada caractere possui seu valor único, o que garante que qualquer dispositivo configurado de forma adequada possa visualizar sem problemas qualquer texto em qualquer idioma.</p>
+
+			<p>Esses caracteres Unicode são posteriormente convertidos para a base hexadecimal, a qual quando sequenciada e agrupada em seis dígitos pode ser impressa em pixels em uma matriz. O resultado gerado pode ser surpreendente, indo de uma nuvem ruídosa até mosaícos elaborados que lembram antigas tapeçarias européias que contavam as mais fantásticas histórias.</p>
+
+			<br class="espacador"/>
+
+			<div class="obra">
+				<h2>A Bíblia do Rei Jaime</h2>
+
+				<img class="quadro" src="imgs/museum/The_King_James_Bible.png">
+				<span class="leg_quadro">The King James Bible; 1611 - Texto obtido através do <a href="https://www.gutenberg.org" target="_blank">Projeto Gutenberg</a></span>
+
+				<p>A Bíblia do Rei Jaime, é uma tradução inglesa da Bíblia realizada em benefício da Igreja Anglicana, sob ordens do rei Jaime I no início do século XVII. É o livro mais publicado na língua inglesa, sendo considerado um dos livros mais importantes para o desenvolvimento da cultura e língua inglesa.</p>
+			</div>
+
+			<div class="obra">
+				<h2>Frankenstein</h2>
+
+				<img class="quadro" src="imgs/museum/Frankenstein.png">
+				<span class="leg_quadro">Frankenstein, Mary Shelley; 1831 - Texto obtido através do <a href="https://www.gutenberg.org" target="_blank">Projeto Gutenberg</a></span>
+
+				<p>Frankenstein ou o Prometeu Moderno, é um romance de terror gótico com inspirações do movimento romântico, de autoria de Mary Shelley, escritora britânica nascida em Londres. É considerada a primeira obra de ficção científica da história. O romance relata a história de Victor Frankenstein, um estudante de ciências naturais que constrói um monstro em seu laboratório.</p>
+			</div>
+
+			<div class="obra">
+				<h2>Alice no País das Maravilhas</h2>
+
+				<img class="quadro" src="imgs/museum/Alices_Adventures_in_Wonderland.png">
+				<span class="leg_quadro">Alice in Wonderland, Lewis Carroll; 1865 - Texto obtido através do <a href="https://www.gutenberg.org" target="_blank">Projeto Gutenberg</a></span>
+
+				<p>Alice no País das Maravilhas é a obra infantil mais conhecida de Lewis Carroll. É uma das obras mais célebres do gênero literário nonsense. O livro conta a história de uma menina chamada Alice que cai numa toca de coelho que a transporta para um lugar fantástico povoado por criaturas peculiares e antropomórficas, revelando uma lógica do absurdo, característica dos sonhos.</p>
+			</div>
+
+			<div class="obra">
+				<h2>Drácula</h2>
+
+				<img class="quadro" src="imgs/museum/Dracula.png">
+				<span class="leg_quadro">Dracula, Bram Stoker; 1897 - Texto obtido através do <a href="https://www.gutenberg.org" target="_blank">Projeto Gutenberg</a></span>
+
+				<p>Drácula é um romance de terror gótico lançado em 1897, escrito pelo autor irlandês Bram Stoker, tendo como protagonista o vampiro Conde Drácula. Tornou-se a mais famosa história de vampiro da literatura.</p>
+			</div>
+
+			<div class="obra">
+				<h2>Orgulho e Preconceito</h2>
+
+				<img class="quadro" src="imgs/museum/Pride_and_Prejudice.png">
+				<span class="leg_quadro">Pride and Prejudice, Jane Austen; 1813 - Texto obtido através do <a href="https://www.gutenberg.org" target="_blank">Projeto Gutenberg</a></span>
+
+				<p>Orgulho e Preconceito é um romance da escritora britânica Jane Austen. Publicado pela primeira vez em 1813, na verdade havia sido terminado em 1797, antes de ela completar 21 anos, em Steventon, Hampshire, onde Jane morava com os pais. A história mostra a maneira com que a personagem Elizabeth Bennet lida com os problemas relacionados à educação, cultura, moral e casamento na sociedade aristocrática do início do século XIX, na Inglaterra.</p>
+			</div>
+
+			<div class="obra">
+				<h2>As Aventuras de Sherlock Holmes</h2>
+
+				<img class="quadro" src="imgs/museum/The_Adventures_of_Sherlock_Holmes.png">
+				<span class="leg_quadro">The Adventures of Sherlock Holmes, Sir Arthur Conan Doyle; 1892 - Texto obtido através do <a href="https://www.gutenberg.org" target="_blank">Projeto Gutenberg</a></span>
+
+				<p>As Aventuras de Sherlock Holmes é uma coletânea de doze contos de aventuras do detetive Sherlock Holmes, publicada em 1892, escritos por Sir Arthur Conan Doyle. Os contos foram originalmente publicados na revista Strand Magazine, nos anos de 1891 e 1892.</p>
+			</div>
+
+			<div class="obra">
+				<h2>O Grande Gatsby</h2>
+
+				<img class="quadro" src="imgs/museum/The_Great_Gatsby.png">
+				<span class="leg_quadro">The Great Gatsby, F. Scott Fitzgerald; 1925 - Texto obtido através do <a href="https://www.gutenberg.org" target="_blank">Projeto Gutenberg</a></span>
+
+				<p>O Grande Gatsby (The Great Gatsby) é um romance escrito pelo autor americano F. Scott Fitzgerald. Publicado pela primeira vez em 10 de abril de 1925, a história passa-se em Nova Iorque e na cidade de Long Island durante o verão de 1922, e é uma crítica ao "Sonho Americano".</p>
+			</div>
+
+			<div class="obra">
+				<h2>O Príncipe</h2>
+
+				<img class="quadro" src="imgs/museum/The_Prince.png">
+				<span class="leg_quadro">The Prince (versão inglesa), Nicolau Maquiavel; 1532 (original) - Texto obtido através do <a href="https://www.gutenberg.org" target="_blank">Projeto Gutenberg</a></span>
+
+				<p>O Príncipe (em italiano, Il Principe) é um livro escrito por Nicolau Maquiavel em 1513, cuja primeira edição foi publicada postumamente, em 1532. Trata-se de uma das teorias políticas mais elaboradas pelo pensamento humano e que tem grande influência em descrever o Estado desde a sua publicação até os dias de hoje, mesmo os sistemas de governo já serem variados.</p>
+			</div>
+
+
+			<br class="espacador"/>
+
+			<h1>Bônus - Músicas ao redor do Mundo</h1>
+			<p>O mundo é um lugar vasto, cheio de diversidade cultural, cheio de poetas, músicos e histórias. E em cada cantinho do mundo pode-se encontrar um tipo ou variedade de um idioma. </p>
+			<p>Aqui listamos as músicas dos dez idiomas mais falados ao redor do mundo, cada um possui suas peculiaridades e seu formato único ao ser codificado em HexPic. Olhe com atenção, ouça com os olhos, sinta a harmonia. HexPic-se!</p>
+
+			<div class="obra">
+				<h2>good 4 u</h2>
+
+				<img class="quadro" src="imgs/museum/good_4_u.png">
+				<span class="leg_quadro">Título: good 4 u; Artista: Olivia Rodrigo; Inglês (1.132 bilhões de falantes)</span>
+
+			</div>
+
+			<div class="obra">
+				<h2>哪里都是你</h2>
+
+				<img class="quadro" src="imgs/museum/Nali_dou_shi_ni.png">
+				<span class="leg_quadro">Título: 哪里都是你; Artista: 队长; Mandarim (1.117 bilhões de falantes)</span>
+
+			</div>
+
+			<div class="obra">
+				<h2>Bullettu Bandi</h2>
+
+				<img class="quadro" src="imgs/museum/Bullettu_Bandi.png">
+				<span class="leg_quadro">Título: Bullettu Bandi; Artista: Mohana Bhogaraju; Hindi (615 milhões de falantes)</span>
+
+			</div>
+
+			<div class="obra">
+				<h2>Antes</h2>
+
+				<img class="quadro" src="imgs/museum/Antes.png">
+				<span class="leg_quadro">Título: Antes; Artista: Ozuna (part. Anuel AA); Espanhol (534 milhões de falantes)</span>
+
+			</div>
+
+			<div class="obra">
+				<h2>Thelma et Louise</h2>
+
+				<img class="quadro" src="imgs/museum/Thelma_et_Louise.png">
+				<span class="leg_quadro">Título: Thelma et Louise; Artista: Poupie; Francês (280 milhões de falantes)</span>
+
+			</div>
+
+			<div class="obra">
+				<h2>Etnaset</h2>
+
+				<img class="quadro" src="imgs/museum/Etnaset.png">
+				<span class="leg_quadro">Título: Etnaset ; Artista: Kollaha Ghayrana; Arábico (274 milhões de falantes)</span>
+
+			</div>
+
+			<div class="obra">
+				<h2>Takey Olpo Kachhe Dakchhi</h2>
+
+				<img class="quadro" src="imgs/museum/Takey_Olpo_Kachhe_Dakchhi.png">
+				<span class="leg_quadro">Título: Takey Olpo Kachhe Dakchhi; Artista: Mahtim Shakib; Bengali (265 milhões de falantes)</span>
+
+			</div>
+
+			<div class="obra">
+				<h2>СОЛНЦЕ МОНАКО</h2>
+
+				<img class="quadro" src="imgs/museum/Sun_of_Monaco.png">
+				<span class="leg_quadro">Título: СОЛНЦЕ МОНАКО; Artista: Люся Чеботина; Russo (258 milhões de falantes)</span>
+
+			</div>
+
+			<div class="obra">
+				<h2>A Queda</h2>
+
+				<img class="quadro" src="imgs/museum/A_Queda.png">
+				<span class="leg_quadro">Título: A Queda; Artista: Gloria Groove; Português (234 milhões de falantes)</span>
+
+			</div>
+
+			<div class="obra">
+				<h2>Makna Cinta</h2>
+
+				<img class="quadro" src="imgs/museum/Makna_Cinta.png">
+				<span class="leg_quadro">Título: Makna Cinta; Artista: Rizky Febian; Indonésio (198 milhões de falantes)</span>
+
+			</div>
+
+	
+		</div>
+	</div>
+</body>
+</html>

@@ -1,0 +1,446 @@
+<!-- HEXPIC BETA 1.2 -->
+<!-- CÓDIGO ESCRITO POR JOSÉ LUCAS SCHON -->
+<!--  -->
+<!-- CHANGELOG -->
+<!-- 1.2 - AJUSTE RESPONSIVO; AJUSTE DE MARGEM DE ARREDONDAMENTO; INCLUSÃO DE MÉTODO PERSONALIZADO -->
+<!-- 1.1 - INCLUSÃO DE MÉTODO AUMENTADO E ARTE; ALTERAÇÃO DE LAYOUT; -->
+<!-- 1.0 - CRIAÇÃO DE MÉTODO DE CODIFICAÇÃO E DECODIFICAÇÃO; INCLUSÃO DE MÉTODO DE SALVAMENTO EM ARTE E HEXPIC AUMENTADO -->
+<!--  -->
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+	<title>HexPic - Decodificador</title>
+	<!-- <link rel="canonical" href="https://url.com/" /> -->
+	<meta name="description" content="Converta texto em pixels. Crie mosaicos abstratos incríveis. Salve textos e frases em imagens. Mergulhe na experiência HexPic!">
+	<meta property="og:locale" content="en_US">
+	<meta property="og:title" content="HexPic Converter" />
+	<!-- <meta property="og:url" content="https://url.com/" /> -->
+	<meta property="og:image" content="imgs/ogimage.png" />
+	<meta property="og:site_name" content="HexPic" />
+	<meta property="og:description" content="Converta texto em pixels. Crie mosaicos abstratos incríveis. Salve textos e frases em imagens. Mergulhe na experiência HexPic!" />
+	<meta property="og:type" content="website" />
+	<link rel="icon" type="image/png" href="imgs/hxp192.png" sizes="192x192"/>
+	<link rel="icon" type="image/png" href="imgs/hxp96.png" sizes="96x96"/>
+	<link rel="icon" type="image/png" href="imgs/hxp32.png" sizes="32x32"/>
+	<link rel="icon" type="image/png" href="imgs/hxp16.png" sizes="16x16"/>
+	<link rel="manifest" href="/manifest.json"/>
+	<meta name="msapplication-TileColor" content="#f09d99"/>
+	<meta name="msapplication-TileImage" content="imgs/hxp144.png"/>
+	<meta name="theme-color" content="#ffffff"/>
+	<link href="https://fonts.googleapis.com/css2?family=Merriweather&family=Vujahday+Script&display=swap" rel="stylesheet"> 
+	<link rel="stylesheet" type="text/css" href="estilo.css">
+	<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+</head>
+<body>
+	<nav class="navegacao">
+		<h2><img class="logo" src="imgs/HexPic.png">HexPic</h2>
+		<ul class="menu">
+			<li><a href="museum.html">Museu de Artes</a></li>
+			<li><a href="index.html">Conversor</a></li>
+		</ul>
+	</nav>
+	<div class="container">
+		<a href="index.html" class="botao top_link hxp_rosa"><i class="fas fa-th"></i>Texto para HexPic</a>
+		<a href="decode.html" class="botao top_link"><i class="fas fa-align-left"></i>HexPic para Texto</a>
+		<button class="botao botao_direita hxp_cinza" onclick="passoDois()" id="proximo">Próximo</button>
+
+
+		<div class="campo_upload" id="cp_upload">
+			<label for="upload_imagem" class="upload"><i class="fas fa-upload"></i>Selecionar um HexPic...</label>
+		</div>
+
+
+		<div class="oculto" id="escolha">
+			<span class="dica">Escolha uma opção. (Lembre-se: HexPics grandes podem demorar mais que o normal para serem decodificados, se for o seu caso, seja paciente.)</span>
+			<button class="botao_escolha" onclick="decodificador()">HexPic Puro (padrão)</button>
+			<br/>
+			<button class="botao_escolha hxp_azul" onclick="hexpicGrande()">HexPic Aumentado</button>
+			<br/>
+			<button class="botao_escolha hxp_rosa" onclick="hexpicQuadro()">Arte HexPic</button>
+			<br/>
+			<button class="botao_escolha hxp_verde" onclick="hexpicCustom(1)">Personalizado</button>
+		</div>
+		
+
+		<div class="custom oculto" id="custom">
+			<span class="dica" for="tamanho">Insira a largura HexPic: (quantos quadrados diferentes existem em uma linha) </span>
+			<input type="number" name="tamanho" id="tamanho" placeholder="Somente números">
+			<button class="botao hxp_azul" onclick="hexpicCustom(2)">Vamos decodificar!</button>
+		</div>
+
+		<span class="dica oculto" id="alerta">
+			<i class="fas fa-question"></i>Há algo de errado? Tente refazer a decodificação usando o método <b>'Personalizado'</b>.
+		</span>
+
+		<textarea id="texto" class="oculto"></textarea>
+		<canvas id="tela" class="oculto"></canvas>
+		<canvas id="tela_secundaria" class="oculto"></canvas>
+		<input type="file" name="upload_imagem" id="upload_imagem" class="oculto" onchange="liberaProx()" />
+	</div>
+</body>
+</html>
+
+
+
+<script type="text/javascript">
+
+// PASSO 1:
+// LISTAGEM DE COMPONENTES & DEF. DE VARIAVEIS
+// CRIAÇÃO DE DOIS CANVAS: O CANVAS BACKUP ARMAZENA A IMAGEM ORIGINAL ENQUANTO O CANVAS PRINCIPAL SE MODIFICA PARA A DECODIFICAÇÃO
+
+var canvas = document.getElementById('tela');
+var context = canvas.getContext('2d');
+
+var canvas_backup = document.getElementById('tela_secundaria');
+var context_backup = canvas_backup.getContext('2d');
+
+var imagem = document.getElementById("upload_imagem");
+imagem.addEventListener("change", geraImagem, false);
+
+
+
+
+// PASSO 2:
+// CARREGADO OS COMPONENTES DE TELA
+// CASO O INPUT FILE NÃO ESTEJA VAZIO A TELA DE UPLOAD É OCULTADA E É EXIBIDO A TELA COM AS OPÇÕES DE DECODIFICAÇÃO
+
+function passoDois(){
+
+	var campo_entrada = document.querySelector("#upload_imagem");
+	var campo_escolha = document.querySelector("#escolha");
+	var btn_proximo = document.querySelector("#proximo");
+	var campo_upload = document.querySelector("#cp_upload");
+
+	if (document.getElementById("upload_imagem").files.length != 0 ){
+
+		gatilho = new Event("change");
+		imagem.dispatchEvent(gatilho);
+
+		if (!campo_upload.classList.contains("oculto")) {
+			campo_upload.classList.add("oculto");
+			btn_proximo.classList.add("oculto");
+			campo_escolha.classList.remove("oculto");
+		}
+	}
+}
+
+
+
+
+// PASSO 3:
+// OCORRE O TRATAMENTO DA IMAGEM BASEADO NA ESCOLHA DO USUARIO
+// A ESCOLHA PODE SER:
+// HEXPIC GRANDE - É CALCULADO O TAMANHO DA MATRIZ E REDIMENSIONADO O CANVAS PARA DECODIFICAÇÃO
+// HEXPIC QUADRO - É CALCULADO A POSIÇÃO DO HEXPIC BASEADO NA MARGEM BRANCA E ACIONADO A FUNÇÃO HEXPICGRANDE
+// HEXPIC CUST. - O USUARIO DIZ O TAMANHO DO HEXPIC E ESTE É REDIMENSIONADO PARA DECODIFICAÇÃO
+
+function hexpicGrande(entrada){
+
+	tamanho = entrada ? entrada : calculaMatriz(0,0);
+
+	console.log('Cada hexi possui ' + tamanho + ' pixels');
+
+	if (tamanho){
+
+		altura = Math.round(canvas_backup.height / tamanho);
+		largura = Math.round(canvas_backup.width / tamanho);
+
+		canvas.width = largura;
+        canvas.height = altura;
+
+        console.log('O canvas foi redimensionado para ' + largura + 'x' + altura);
+
+        context.beginPath();
+		context.rect(0, 0, largura, altura);
+		context.closePath();
+		context.fillStyle = "#000";
+
+		context.imageSmoothingEnabled = false;
+		context.drawImage(canvas_backup, 0, 0, largura, altura);
+
+		decodificador();
+	}
+}
+
+function hexpicQuadro(){
+	if (pegaCor(184,184) == 'ffffff' && pegaCor(185,184) == 'ffffff' && pegaCor(184,185) == 'ffffff' && pegaCor(185,185) != 'ffffff') {
+
+		canvas.width = 1080;
+		canvas.height = 1080;
+
+		context.imageSmoothingEnabled = false;
+		context.drawImage(canvas_backup, 185, 185, 709, 709, 0, 0, 1080, 1080);
+
+		canvas_backup.width = 1080;
+		canvas_backup.height = 1080;
+
+		context_backup.imageSmoothingEnabled = false;
+		context_backup.drawImage(canvas, 0, 0, 1080, 1080);
+
+		hexpicGrande();
+	}
+}
+
+function hexpicCustom(parte){
+	var campo_1 = document.querySelector("#custom");
+	var campo_2 = document.querySelector("#escolha");
+
+	if (parte == 1){
+		if (campo_1.classList.contains("oculto")) {
+			campo_2.classList.add("oculto");
+			campo_1.classList.remove("oculto");
+		}
+	}
+
+	if (parte == 2){
+		var valor_custom = parseInt(document.querySelector("#tamanho").value);
+
+		if (valor_custom){
+
+			tamanho = canvas.width / valor_custom;
+
+			campo_1.classList.add("oculto");
+
+			hexpicGrande(tamanho);
+		}
+	}
+}
+
+
+
+
+// PASSO 4:
+// A ÚLTIMA ETAPA DO PROCESSO, ONDE A FUNÇÃO LÊ TODOS OS PIXELS DO CANVAS PRINCIPAL, CARREGA AS INFORMAÇÕES EM HEXADECIMAL E OS CONVERTE PARA UTF
+
+function decodificador(){
+
+	var campo_resultado = document.querySelector("#texto");
+	if (campo_resultado.classList.contains("oculto")) {
+		campo_resultado.classList.remove("oculto");
+	}
+
+	var campo_escolha = document.querySelector("#escolha");
+	if (!campo_escolha.classList.contains("oculto")) {
+		campo_escolha.classList.add("oculto");
+	}
+
+	if (canvas.width > 0) {
+
+		var pixels = canvas.width * canvas.height;
+
+		var x = 0;
+		var y = 0;
+		var resultado = '';
+
+		var borda_maxima = canvas.width - 1;
+
+		var final = '';
+
+		for (i = 0; i < pixels; i++) {
+			resultado = resultado + pegaCor(x,y,true);
+			if (x == borda_maxima){
+				x = 0;
+					y++;
+				} else {
+					x++;
+			}
+		}
+
+		console.log('Matrix de ' + pixels + ' unidades, resultado final de ' + new TextDecoder().decode(hexToBytes(final)));
+
+		var campo_entrada = document.querySelector("#upload_imagem");
+		var campo_resultado = document.querySelector("#texto");
+
+		if (!campo_entrada.classList.contains("oculto")) {
+				campo_entrada.classList.add("oculto");
+				campo_resultado.classList.remove("oculto");
+			}
+
+		console.log('Resultado: ' + resultado);
+
+		var msg_alerta = document.querySelector("#alerta");
+
+		campo_resultado.value = new TextDecoder().decode(hexToBytes(resultado));
+
+		if(campo_resultado.value.includes('�')){
+			msg_alerta.classList.remove("oculto");
+
+			campo_resultado.value = campo_resultado.value.replaceAll('�', '');
+		}
+	}
+
+
+}
+
+
+
+
+// FUNÇÕES
+// TODAS AS FUNÇÕES SECUNDÁRIAS ESTÃO
+
+// CONVERTE UMA STRING HEXADECIMAL PARA BYTES (USADO NA FUNÇÃO DECODE)
+
+function hexToBytes(hex) {
+    const bytes = new Uint8Array(hex.length / 2);
+    for (let i = 0; i !== bytes.length; i++) {
+        bytes[i] = parseInt(hex.substr(i * 2, 2), 16);
+    }
+    return bytes;
+}
+
+
+
+
+// RESPONSAVEL POR CARREGAR UMA IMAGEM DO INPUT FILE PARA O CANVAS PRINCIPAL E PARA O CANVAS DE BACKUP
+
+function geraImagem(e){
+    var reader = new FileReader();
+    reader.onload = function(event){
+        var img = new Image();
+        img.onload = function(){
+            canvas.width = img.width;
+            canvas_backup.width = img.width;
+            canvas.height = img.height;
+            canvas_backup.height = img.height;
+            context.drawImage(img,0,0);
+            context_backup.drawImage(img,0,0);
+        }
+        img.src = event.target.result;
+    }
+    reader.readAsDataURL(e.target.files[0]);
+}
+
+
+
+
+// RETORNA O CODIGO DE COR HEXADECIMAL DE UM PIXEL COM BASE NAS COORDENADAS
+// OBS: DEPENDENDO DO TIPO DA DECODIFICAÇÃO, A FUNÇÃO MUDA O ALVO DO CANVAS (PRINCIPAL OU BACKUP)
+
+function pegaCor(x,y, puro){
+	var cor_data = puro == true ? context.getImageData(x, y, 1, 1).data : context_backup.getImageData(x, y, 1, 1).data;
+	var cor_hex = paraHex(cor_data[0]) + paraHex(cor_data[1]) + paraHex(cor_data[2]);
+
+	return cor_hex;
+}
+
+
+
+
+// CONVERTE O COMPONENTE DE COR PARA HEXADECIMAL (EXTENSÃO DA FUNÇÃO PEGACOR)
+
+function paraHex(entrada) {
+  var hex = entrada.toString(16);
+  return hex.length == 1 ? "0" + hex : hex;
+}
+
+
+
+
+// CALCULA O TAMANHO DE UM PIXEL HEXPIC BASEADO NA COORDENADAS X E Y
+
+function calculaMatriz(x,y){
+	cor_A = pegaCor(x,y);
+	cor_B = '';
+	cor_C = '';
+	cor_D = '';
+
+	matriz = 0;
+
+
+	matriz_x = 0;
+	for_x = x;
+	for (var i = 0; matriz_x == 0; i++) {
+		for_x++;
+		cor_B = pegaCor(for_x,y);
+
+		if (cor_A != cor_B){ matriz_x = i; }
+		if (i > canvas_backup.width){ matriz_x = -1; }
+	}
+	
+	matriz_y = 0;
+	for_y = y;
+	for (var i = 0; matriz_y == 0; i++) {
+		for_y++;
+		cor_C = pegaCor(x,for_y);
+
+		if (cor_A != cor_C){ matriz_y = i; }
+		if (i > canvas_backup.height){ matriz_y = -1; }
+	}
+
+	matriz_xy = 0;
+	for_x = x;
+	for_y = y;
+	for (var i = 0; matriz_xy == 0; i++) {
+		for_x++;
+		for_y++;
+		cor_D= pegaCor(for_x,for_y);
+
+		if (cor_A != cor_D){ matriz_xy = i; }
+		if (i > canvas_backup.width && (i > canvas_backup.height)){ matriz_xy = -1; }
+	}
+
+	if (matriz == 0 && (matriz_y == matriz_x)) { matriz = matriz_y + 1 }
+	if (matriz == 0 && (matriz_y == matriz_xy)) { matriz = matriz_xy + 1 }
+	if (matriz == 0 && (matriz_x == matriz_xy)) { matriz = matriz_x + 1 }
+
+	if (matriz != 0){
+		return matriz;
+	} else {
+		return 0;
+	}
+}
+
+
+
+
+// PROCURA POR UMA COR ESPECIFICA (SINTAXE: COORD INICIAL X, COORD INICIAL Y, COR HEX)
+// EM CONSTRUÇÃO...
+
+function buscaCor(x, y, hexcor){
+
+	max_x = canvas.width;
+	max_y = canvas.height;
+
+	flag = false;
+	erro = false;
+
+	while (flag == false){
+
+		cor = pegaCor(x,y);
+
+		if (hexcor){
+			if (cor == hexcor){
+
+			}
+		}
+		
+
+		if (cor )
+
+		if (x < max_x){ x++ } else { x = 0; y++ }
+		if (y > max_y){ flag = true; erro = true }
+
+	}
+}
+
+
+
+
+// FUNÇÃO VISUAL: QUANDO O INPUT FILE FOR PREENCHIDO ELE ALTERA A APARENCIA DO BOTÃO PROXIMO
+
+function liberaProx(){
+	var btn_proximo = document.querySelector("#proximo");
+
+	if (btn_proximo.classList.contains("hxp_cinza")) {
+		btn_proximo.classList.add("hxp_azul");
+		btn_proximo.classList.remove("hxp_cinza");
+	}
+}
+
+
+</script>
