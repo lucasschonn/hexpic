@@ -13,7 +13,7 @@ Se quiser criar seus próprios HexPics acesse [HexPic](https://hexpic.onrender.c
 O processo de conversão é bastante simples e pode ser dividido em quatro etapas:
 
 1. O texto é convertido para o formato hexadecimal, o processo de conversão pode ser feito de maneira fácil utilizando o codificador de texto do Javascript.
-2. Em seguida dividimos o bloco de caracteres hexadecimais em clusters de seis dígitos (esta parte é fundamental pois as cores utilizadas para conversão são baseadas em cores hexadecimais).
+2. Em seguida dividimos o bloco de caracteres hexadecimais em clusters de seis dígitos (esta parte é fundamental pois as cores utilizadas para conversão são baseadas em cores hexadecimais e nisto usamos seis dígitos para economizar espaço de tela).
 3. O próximo passo consiste em criar um canvas e sequenciar os clusters criando para cada cluster um pixel de cores diferentes.
 4. Ao término do processo o canvas pode ser baixado como formato .png e desta forma pode armazenar informações que posteriormente podem ser decodificadas usando o mesmo processo reverso.
 
